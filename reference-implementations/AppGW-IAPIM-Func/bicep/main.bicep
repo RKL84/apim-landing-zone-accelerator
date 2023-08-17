@@ -83,15 +83,15 @@ resource apimRG 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   location: location
 }
 
-// module networking './networking/networking.bicep' = {
-//   name: 'networkingresources'
-//   scope: resourceGroup(networkingRG.name)
-//   params: {
-//     workloadName: workloadName
-//     deploymentEnvironment: environment
-//     location: location
-//   }
-// }
+module networking './networking/networking.bicep' = {
+  name: 'networkingresources'
+  scope: resourceGroup(networkingRG.name)
+  params: {
+    workloadName: workloadName
+    deploymentEnvironment: environment
+    location: location
+  }
+}
 
 // module backend './backend/backend.bicep' = {
 //   name: 'backendresources'

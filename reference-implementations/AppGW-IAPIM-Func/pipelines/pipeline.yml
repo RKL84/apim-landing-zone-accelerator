@@ -19,7 +19,7 @@ resources:
   repositories:
   - repository: apimeslz
     type: github
-    name: cykreng/Enterprise-Scale-APIM
+    name: RKL84/  
     endpoint: <Github service connection name>
 
 stages:
@@ -34,25 +34,25 @@ stages:
             inputs:
               targetPath: '$(Pipeline.Workspace)/s/deployment/bicep'
               artifact: $(artifactName)
-              publishLocation: 'pipeline'
-  - stage: deploy_artifacts
-    displayName: 'Deploy all bicep artifacts'
-    jobs:
-      - deployment: 
-        displayName: 'Deploy APIM ESLZ artifacts to Azure subscription'
-        environment: $(environmentName)
-        strategy:
-         runOnce:
-           deploy:
-             steps:
-               - download: current
-                 artifact: $(artifactName)
-               - task: AzureCLI@2
-                 inputs:
-                   azureSubscription: $(serviceConnectionName)
-                   scriptType: 'pscore'
-                   scriptLocation: 'inlineScript'
-                   inlineScript: |
-                    echo "using serviceconnection :" $(serviceConnectionName)
-                    az deployment sub create --location $(deploymentLocation) --name $(deploymentName) --template-file $(Pipeline.Workspace)/$(artifactName)/main.bicep --parameters workloadName=$(workloadName) environment=$(eslzEnvironmentType)
+  #             publishLocation: 'pipeline'
+  # - stage: deploy_artifacts
+  #   displayName: 'Deploy all bicep artifacts'
+  #   jobs:
+  #     - deployment: 
+  #       displayName: 'Deploy APIM ESLZ artifacts to Azure subscription'
+  #       environment: $(environmentName)
+  #       strategy:
+  #        runOnce:
+  #          deploy:
+  #            steps:
+  #              - download: current
+  #                artifact: $(artifactName)
+  #              - task: AzureCLI@2
+  #                inputs:
+  #                  azureSubscription: $(serviceConnectionName)
+  #                  scriptType: 'pscore'
+  #                  scriptLocation: 'inlineScript'
+  #                  inlineScript: |
+  #                   echo "using serviceconnection :" $(serviceConnectionName)
+  #                   az deployment sub create --location $(deploymentLocation) --name $(deploymentName) --template-file $(Pipeline.Workspace)/$(artifactName)/main.bicep --parameters workloadName=$(workloadName) environment=$(eslzEnvironmentType)
 

@@ -15,12 +15,12 @@ pool:
 variables:
 - template: apim-eslz-vars.yml
 
-resources:
-  repositories:
-  - repository: apimeslz
-    type: github
-    name: RKL84/  
-    endpoint: <Github service connection name>
+# resources:
+#   repositories:
+#   - repository: apimeslz
+#     type: github
+#     name: RKL84/  
+#     endpoint: <Github service connection name>
 
 stages:
   - stage: retrieve_template_from_github_and_publish
@@ -29,7 +29,7 @@ stages:
       - job: publish_artifact_to_pipeline
         displayName: 'Publish bicep files as artifact to pipeline'
         steps:
-          - checkout: apimeslz
+          - checkout: self
           - task: PublishPipelineArtifact@1
             inputs:
               targetPath: '$(Pipeline.Workspace)/s/deployment/bicep'

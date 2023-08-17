@@ -1,24 +1,3 @@
-//
-//   ***@microsoft.com, 2021
-//
-// Deploy as
-//
-// # Script start
-//
-// $RESOURCE_GROUP = "rgAPIMCSBackend"
-// $LOCATION = "westeurope"
-// $BICEP_FILE="networking.bicep"
-//
-// # delete a deployment
-//
-// az deployment group  delete --name testnetworkingdeployment -g $RESOURCE_GROUP 
-// 
-// # deploy the bicep file directly
-//
-// az deployment group create --name testnetworkingdeployment --template-file $BICEP_FILE --parameters parameters.json -g $RESOURCE_GROUP -o json
-// 
-// # Script end
-
 
 // Parameters
 @description('A short name for the workload being deployed')
@@ -465,52 +444,52 @@ resource apimNSG 'Microsoft.Network/networkSecurityGroups@2020-06-01' = {
   }
 }
 
-// Public IP 
-resource pip 'Microsoft.Network/publicIPAddresses@2020-07-01' = {
-  name: publicIPAddressName
-  location: location
-  properties: {
-    publicIPAllocationMethod: 'Dynamic'
-  }
-}
+// // Public IP 
+// resource pip 'Microsoft.Network/publicIPAddresses@2020-07-01' = {
+//   name: publicIPAddressName
+//   location: location
+//   properties: {
+//     publicIPAllocationMethod: 'Dynamic'
+//   }
+// }
 
-// Mind the PIP for bastion being Standard SKU, Static IP
-resource pipBastion 'Microsoft.Network/publicIPAddresses@2020-07-01' = {
-  name: publicIPAddressNameBastion
-  location: location
-  sku: {
-    name: 'Standard'
-    tier: 'Regional'
-  }
-  properties: {
-    publicIPAllocationMethod: 'Static'
-    publicIPAddressVersion: 'IPv4'
-  }  
-}
+// // Mind the PIP for bastion being Standard SKU, Static IP
+// resource pipBastion 'Microsoft.Network/publicIPAddresses@2020-07-01' = {
+//   name: publicIPAddressNameBastion
+//   location: location
+//   sku: {
+//     name: 'Standard'
+//     tier: 'Regional'
+//   }
+//   properties: {
+//     publicIPAllocationMethod: 'Static'
+//     publicIPAddressVersion: 'IPv4'
+//   }  
+// }
 
-resource bastion 'Microsoft.Network/bastionHosts@2020-07-01' = {
-  name: bastionName
-  location: location 
-  tags:  {
-    Owner: owner
-  }
-  properties: {
-    ipConfigurations: [
-      {
-        name: bastionIPConfigName
-        properties: {
-          privateIPAllocationMethod: 'Dynamic'
-          publicIPAddress: {
-            id: pipBastion.id             
-          }
-          subnet: {
-            id: '${vnetApimCs.id}/subnets/${bastionSubnetName}' 
-          }
-        }
-      }
-    ]
-  }
-} 
+// resource bastion 'Microsoft.Network/bastionHosts@2020-07-01' = {
+//   name: bastionName
+//   location: location 
+//   tags:  {
+//     Owner: owner
+//   }
+//   properties: {
+//     ipConfigurations: [
+//       {
+//         name: bastionIPConfigName
+//         properties: {
+//           privateIPAllocationMethod: 'Dynamic'
+//           publicIPAddress: {
+//             id: pipBastion.id             
+//           }
+//           subnet: {
+//             id: '${vnetApimCs.id}/subnets/${bastionSubnetName}' 
+//           }
+//         }
+//       }
+//     ]
+//   }
+// } 
 
 
 
@@ -534,4 +513,4 @@ output privateEndpointSubnetid string = '${vnetApimCs.id}/subnets/${privateEndpo
 output backEndSubnetid string = '${vnetApimCs.id}/subnets/${backEndSubnetName}'  
 output apimSubnetid string = '${vnetApimCs.id}/subnets/${apimSubnetName}'  
 
-output publicIp string = pip.id
+// output publicIp string = pip.id

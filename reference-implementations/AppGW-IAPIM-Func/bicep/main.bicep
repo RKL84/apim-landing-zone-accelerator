@@ -93,19 +93,19 @@ module networking './networking/networking.bicep' = {
   }
 }
 
-// module backend './backend/backend.bicep' = {
-//   name: 'backendresources'
-//   scope: resourceGroup(backendRG.name)
-//   params: {
-//     workloadName: workloadName
-//     environment: environment
-//     location: location    
-//     vnetName: networking.outputs.apimCSVNetName
-//     vnetRG: networkingRG.name
-//     backendSubnetId: networking.outputs.backEndSubnetid
-//     privateEndpointSubnetid: networking.outputs.privateEndpointSubnetid
-//   }
-// }
+module backend './backend/backend.bicep' = {
+  name: 'backendresources'
+  scope: resourceGroup(backendRG.name)
+  params: {
+    workloadName: workloadName
+    environment: environment
+    location: location    
+    vnetName: networking.outputs.apimCSVNetName
+    vnetRG: networkingRG.name
+    backendSubnetId: networking.outputs.backEndSubnetid
+    privateEndpointSubnetid: networking.outputs.privateEndpointSubnetid
+  }
+}
 
 // var jumpboxSubnetId= networking.outputs.jumpBoxSubnetid
 // var CICDAgentSubnetId = networking.outputs.CICDAgentSubnetId
